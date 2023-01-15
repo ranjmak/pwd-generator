@@ -88,7 +88,7 @@ var upperCasedCharacters = [
   'Z'
 ];
 
-// in case of any issues, these are the default values we prefer
+// in case of any issues, these are the default values
 var pwdLength = 10;
 var uppercaseNums = false;
 var lowercaseNums = false;
@@ -98,12 +98,14 @@ var numericNums = false;
 // Function to prompt user for password options
 function getPasswordOptions() {
 
+  //pwd has to be between 10 & 64 
   while ((pwdLength = prompt("length of password you prefer (between 10 & 64):")) < 10 || pwdLength > 64) {
-    alert("Only choose a number between 10 and 64 inclusive!");
+    alert("Only choose a number between 10 and 64, inclusive!");
   }
 
+  //keep in the loop until at least one character type is chosen
   while(!(lowercaseNums || uppercaseNums || specialCharNums || numericNums)) {
-      alert("Please choose at least one character type");
+      alert("Please choose at least one character type from the following four types");
       lowercaseNums = confirm("preference for lowercase letters?");
       uppercaseNums = confirm("preference for UPPERCASE letters?");
       numericNums = confirm("preference for numerics?");
@@ -119,7 +121,7 @@ function getRandom(arr) {
 
 // Function to generate password with user input
 function generatePassword() {
-  var password = ""; //what this function returns, initially its an empty string
+  var password = ""; //what this function returns, initialising as an empty string
   var i=0; //counter to keep the incremental count of how many characters are in the pwd already
 
   uppercaseNums = false;
@@ -128,7 +130,8 @@ function generatePassword() {
   numericNums = false;
   
   getPasswordOptions();
-
+  
+  // get a random value from each character type array that the user requires until the pwd length criteria is met
   while (i < pwdLength) {
     if (uppercaseNums && i < pwdLength) {
       password += getRandom(upperCasedCharacters);
