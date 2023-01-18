@@ -90,10 +90,10 @@ var upperCasedCharacters = [
 
 // in case of any issues, these are the default values
 var pwdLength = 10;
-var uppercaseNums = false;
-var lowercaseNums = false;
-var specialCharNums = false;
-var numericNums = false;
+var uppercase = false;
+var lowercase = false;
+var specialChars = false;
+var numeric = false;
 
 // Function to prompt user for password options
 function getPasswordOptions() {
@@ -104,12 +104,12 @@ function getPasswordOptions() {
   }
 
   //keep in the loop until at least one character type is chosen
-  while(!(lowercaseNums || uppercaseNums || specialCharNums || numericNums)) {
+  while(!(lowercase || uppercase || specialChars || numeric)) {
       alert("Please choose at least one character type from the following four types");
-      lowercaseNums = confirm("preference for lowercase letters?");
-      uppercaseNums = confirm("preference for UPPERCASE letters?");
-      numericNums = confirm("preference for numerics?");
-      specialCharNums = confirm("preference for special characters?");
+      lowercase = confirm("preference for lowercase letters?");
+      uppercase = confirm("preference for UPPERCASE letters?");
+      numeric = confirm("preference for numerics?");
+      specialChars = confirm("preference for special characters?");
   }
   return;
 }
@@ -122,32 +122,35 @@ function getRandom(arr) {
 // Function to generate password with user input
 function generatePassword() {
   var password = ""; //what this function returns, initialising as an empty string
-  var i=0; //counter to keep the incremental count of how many characters are in the pwd already
+  var pwdCounter=0; //counter to keep the incremental count of how many characters are in the pwd already
 
-  uppercaseNums = false;
-  lowercaseNums = false;
-  specialCharNums = false;
-  numericNums = false;
+  uppercase = false;
+  lowercase = false;
+  specialChars = false;
+  numeric = false;
   
   getPasswordOptions();
   
   // get a random value from each character type array that the user requires until the pwd length criteria is met
-  while (i < pwdLength) {
-    if (uppercaseNums && i < pwdLength) {
+  // note that within the while loop, since we are incrementing the pwdCounter, potentially 4 times, we need to check 
+  // in each if statement whether the pwdLength criteria has been met as well! else we could end up with more than pwdLength
+  // password!!
+  while (pwdCounter < pwdLength) {
+    if (uppercase && pwdCounter < pwdLength) {
       password += getRandom(upperCasedCharacters);
-      i++;
+      pwdCounter++;
     }
-    if (lowercaseNums && i < pwdLength) {
+    if (lowercase && pwdCounter < pwdLength) {
       password += getRandom(lowerCasedCharacters);
-      i++;
+      pwdCounter++;
     }
-    if (specialCharNums && i < pwdLength) {
+    if (specialChars && pwdCounter < pwdLength) {
       password += getRandom(specialCharacters);
-      i++;
+      pwdCounter++;
     }
-    if (numericNums && i < pwdLength) {
+    if (numeric && pwdCounter < pwdLength) {
       password += getRandom(numericCharacters);
-      i++;
+      pwdCounter++;
     }
   }
   
